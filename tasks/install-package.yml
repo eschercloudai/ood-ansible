@@ -19,14 +19,14 @@
     name: "{{ rpm_repo_url }}"
     state: present
     disable_gpg_check: "{{ disable_gpg_check_rpm_repo | bool }}"
-  when: ansible_os_family == "RedHat"
+  when: ansible_os_family == "RedHat" and not ood_use_exiting_repo_file
 
 - name: install the apt repo
   apt:
     deb: "{{ apt_repo_url }}"
     state: present
     update_cache: "{{ apt_update_cache | bool }}"
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" and not ood_use_exiting_repo_file
 
 - name: install node's apt repo
   apt_repository:
@@ -37,13 +37,13 @@
   loop:
     - "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
     - "deb-src https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" and not ood_use_exiting_repo_file
 
 - name: enable epel
   package:
     name: 'epel-release'
     state: present
-  when: ansible_os_family == "RedHat"
+  when: ansible_os_family == "RedHat" and not ood_use_exiting_repo_file
 
 - name: install rhel/centos:8 dependencies
   dnf:

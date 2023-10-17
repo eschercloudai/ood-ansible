@@ -38,3 +38,6 @@ ondemand_dex_package: ondemand-dex
 # needed for testing. no reason to change these in production.
 disable_htcacheclean: false
 nodejs_version: 14
+
+# Set to "true" to skip installation of custom repo config files
+ood_use_exiting_repo_file: false
